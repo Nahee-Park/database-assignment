@@ -10,7 +10,7 @@
 </head>
 <body>
     <?php 
-    $conn = mysqli_connect("localhost","web","web_admin","food_court");
+    $conn = mysqli_connect("localhost","web","web_admin","ewha_food");
     if(!$conn){
         echo "Database Connection Error!";
     }
