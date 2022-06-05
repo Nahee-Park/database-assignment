@@ -11,3 +11,15 @@ p {
   color: #828282;
   font-style: italic;
 }
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+table{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
