@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORNER - 코너별 총주문건수</title>
+    <title>CORNER - NET GAIN</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -18,32 +18,36 @@
         echo "Could not connect: " . mysqli_connect_error();
         exit();
     }
-    $query = "SELECT CORNER_ORDER.CORNERNAME 코너이름,COUNT(DISTINCT CORNER_ORDER.ORDER_NUM) 총주문건수
-    FROM CORNER_ORDER
-    GROUP BY CORNERNAME WITH ROLLUP;";
+    $query = "SELECT CORNER.CORNER_ID AS 코너 , CORNER.CORNER_NAME AS 코너이름, SUM(MENU.CUSTOMER_PRICE) AS 매출
+    FROM CORNER, MENU
+    WHERE CORNER.CORNER_ID = MENU.C_ID
+    GROUP BY CORNER.CORNER_ID, CORNER.CORNER_NAME, CORNER.CORNER_ID
+    ORDER BY SUM(MENU.CUSTOMER_PRICE);";
     $result = mysqli_query($conn,$query);
     ?>
     
     <FORM>
-    <h1>코너별 총 주문건수</h1>
+    <h1>코너별 매출</h1>
 
     <TABLE BORDER=1>
         <TR>
-            <TD>코너이름</TD>
-            <TD>총주문건수</TD>
+            <TD>코너</TD>
+            <TD>코너 이름</TD>
+            <td>매출</td>
         </TR>
         <?php 
         while($row = mysqli_fetch_array($result)){
             ?>
             <TR>
+                <TD><?=$row['코너']?></TD>
                 <TD><?=$row['코너이름']?></TD>
-                <TD><?=$row['총주문건수']?></TD>
+                <TD><?=$row['매출']?></TD>
             </TR>
             <?php } ?>
         
         
 </TABLE>
-<p>*코너이름 기준 오름차순 정렬</p>
+<p>*매출 기준 오름차순 정렬</p>
     </FORM>
     <?php 
     mysqli_free_result($result);

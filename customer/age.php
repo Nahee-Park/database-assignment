@@ -44,7 +44,7 @@
         <TR>
             <TD>연령대</TD>
             <TD>코너 이름</TD>
-            <td>순수익</td>
+            <td>주문빈도</td>
         </TR>
         <?php 
         while($row = mysqli_fetch_array($result)){
